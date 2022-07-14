@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="colorjoe/colorjoe.css">
+    <script src="colorjoe/colorjoe.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <section class="main">
+        <div class="container">
+            <header class="header">
+                <div class="btns">   
+                    <svg class="save_btn" width="15" height="15" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14 4.49323V14H1V1H10.1985L14 4.49323ZM10.5882 0L15 4.05405V15H0V0H10.5882Z"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11 10H4V14H11V10ZM3 9V15H12V9H3Z"/>
+                    </svg>
+                    <svg width="9" height="9" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="1.06064" height="11.6671" transform="matrix(0.707115 0.707099 -0.707115 0.707099 8.25 0)"/>
+                        <rect width="1.06064" height="11.6671" transform="matrix(-0.707114 0.707099 -0.707114 -0.707099 8.99988 8.25)"/>
+                    </svg>
+                </div>
+                <h1 class="title">Таблица цветов</h1>  
+            </header>            
+            <div class="colors">
+                <div class="table_row">
+                    <div class="table_header">Цвет</div>
+                    <div class="table_header">Название</div>
+                    <div class="table_header">Тип</div>
+                    <div class="table_header">Код</div>
+                    <div class="table_header">Изменить</div>
+                    <div class="table_header">Удалить</div>
+                </div>
+                <div class="added_colors"></div>                              
+            </div>
+            <footer class="footer">
+                <button class="add_color_btn">Добавить цвет</button>
+            </footer>
+        </div>
+    </section>
+
+    <div class="add_color_wrapper">
+        <div class="add_color">
+            <svg class="close_btn1" width="9" height="9" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
+                <rect width="1.06064" height="11.6671" transform="matrix(0.707115 0.707099 -0.707115 0.707099 8.25 0)"/>
+                <rect width="1.06064" height="11.6671" transform="matrix(-0.707114 0.707099 -0.707114 -0.707099 8.99988 8.25)"/>
+            </svg>
+            <div class="header">
+                <h2 class="title">Добавление цвета</h2>
+            </div>
+            <form>
+                <div class="inpur_wrapper">
+                    <label class="label1" for="name">Название цвета</label>
+                    <input class="add_input" type="text" name="color_name" id="name" placeholder="Введите название">
+                    <label class="label1" for="type">Выберите тип</label>
+                    <select class="add_select" name="select_type" id=""type>
+                        <option value="main">Main</option>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="base">Base</option>
+                    </select>
+                </div>            
+                <div class="color_picker_wrapper">
+                    <div class="color_picker"></div>
+                    <div class="settings">
+                        <div class="first_line">
+                            <label for="format">Color</label>
+                            <select name="format" id="format">
+                                <option value="hex">HEX</option>
+                                <option value="rgb">RGB<option>                    
+                            </select>
+                            <span class="selected_color_text"></span>
+                            <div class="selected_color"></div>
+                        </div>
+                        <div class="second_line">
+                            <div class="parametr">
+                                <span class="letter">R</span>
+                                <span class="number">0.01</span>
+                            </div>
+                            <div class="parametr">
+                                <span class="letter">G</span>
+                                <span class="number">0.01</span>
+                            </div>
+                            <div class="parametr">
+                                <span class="letter">B</span>
+                                <span class="number">0.01</span>
+                            </div>
+                        </div>
+                        <div class="saved_colors">
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                        </div>                
+                    </div>
+                </div>            
+                <button class="add_btn">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <div class="change_color_wrapper">
+        <div class="change_color">
+            <svg class="close_btn2" width="9" height="9" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
+                <rect width="1.06064" height="11.6671" transform="matrix(0.707115 0.707099 -0.707115 0.707099 8.25 0)"/>
+                <rect width="1.06064" height="11.6671" transform="matrix(-0.707114 0.707099 -0.707114 -0.707099 8.99988 8.25)"/>
+            </svg>
+            <div class="header">
+                <h2 class="title">Изменение цвета</h2>
+            </div>
+            <form>
+                <div class="inpur_wrapper">
+                    <label class="label1" for="name">Название цвета</label>
+                    <input class="add_input" type="text" name="color_name" id="name" placeholder="Введите название">
+                    <label class="label1" for="type">Выберите тип</label>
+                    <select class="add_select" name="select_type" id=""type>
+                        <option value="main">Main</option>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="base">Base</option>
+                    </select>
+                </div>            
+                <div class="color_picker_wrapper">
+                    <div class="color_picker"></div>
+                    <div class="settings">
+                        <div class="first_line">
+                            <label for="format">Color</label>
+                            <select name="format" id="format">
+                                <option value="hex">HEX</option>
+                                <option value="rgb">RGB<option>                    
+                            </select>
+                            <span class="selected_color_text"></span>
+                            <div class="selected_color"></div>
+                        </div>
+                        <div class="second_line">
+                            <div class="parametr">
+                                <span class="letter">R</span>
+                                <span class="number">0.01</span>
+                            </div>
+                            <div class="parametr">
+                                <span class="letter">G</span>
+                                <span class="number">0.01</span>
+                            </div>
+                            <div class="parametr">
+                                <span class="letter">B</span>
+                                <span class="number">0.01</span>
+                            </div>
+                        </div>
+                        <div class="saved_colors">
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                            <div class="saved_color"></div>
+                        </div>                
+                    </div>
+                </div>            
+                <button class="change_btn">Изменить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- <div class="scene">
+        <h2 class="title">Окно 3D</h2>
+        <canvas id="glcanvas" width="640" height="360">
+            
+        </canvas>
+    </div> -->
+    
+    <script src="scrpit.js"></script>
+    <script src="dragndrop.js"></script>
+</body>
+</html>
