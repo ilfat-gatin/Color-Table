@@ -23,10 +23,10 @@ class ColorPicker {
     }
 
     getSavedColors() {
-        const saved = JSON.parse(localStorage.getItem("colorpicker-saved" || "[]"))
-        return new Array(18).fill("5B5B5B").map((defaultColor, i) => {
+        const saved = JSON.parse(localStorage.getItem("colorpicker-saved") || "[]")
+        return new Array(18).fill("#5B5B5B").map((defaultColor, i) => {
             return saved[i] || defaultColor
-        })
+        });
     }
 
     setSelectedColor(color) {
@@ -45,6 +45,45 @@ class ColorPicker {
         localStorage.setItem("colorpicker-saved", JSON.stringify(this.savedColors))
     }
 }
+
+class ColorLine extends HTMLElement {
+    
+    render() {
+        let name = this.getAttribute('name')
+        let color = this.getAttribute('color')
+        let type = this.getAttribute('type')
+
+        this.innerHTML = `
+        <div class="table_header flex">
+            <div class="color_rect" style="background: ${color};"></div>
+        </div>
+        <div class="table_header table_data">${name}</div>
+        <div class="table_header table_data">${type}</div>
+        <div class="table_header table_data">${color}</div>
+        <div class="table_header">
+            <svg class="change" width="15" height="16" viewBox="0 0 15 16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.8701 1.60447C11.0429 1.41283 11.2481 1.26081 11.4739 1.1571C11.6997 1.05338 11.9417 1 12.1861 1C12.4306 1 12.6726 1.05338 12.8984 1.1571C13.1242 1.26081 13.3293 1.41283 13.5022 1.60447C13.675 1.79611 13.8121 2.02362 13.9056 2.27401C13.9991 2.5244 14.0473 2.79277 14.0473 3.06379C14.0473 3.33481 13.9991 3.60317 13.9056 3.85356C13.8121 4.10395 13.675 4.33146 13.5022 4.5231L4.61905 14.3735L1 15.468L1.98701 11.4549L10.8701 1.60447Z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>    
+        </div>
+        <div class="table_header">
+            <svg class="delete" width="11" height="13" viewBox="0 0 11 13" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1H0L1.26923 13H9.73077L11 1ZM9.88865 2H1.11135L2.16904 12H8.83096L9.88865 2Z"/>
+            <rect width="11" height="2"/>
+            </svg>    
+        </div>
+        ` 
+    }
+
+    connectedCallback() { // (2)
+        if (!this.rendered) {
+          this.render();
+          this.rendered = true;
+        }
+        console.log("connectedCallback");
+      }
+}
+
+window.customElements.define('color-line', ColorLine)
 
 const cp1 = new ColorPicker(document.querySelector(".add_color"))
 
@@ -80,29 +119,13 @@ document.querySelector(".close_btn2").addEventListener("click", () => {
 })
 
 function renderTableRow({id, name, type, color}) {
-    const el = document.createElement("div")
+    const el = document.createElement("color-line")
     el.classList.add("table_row")
     el.classList.add("drag")
     el.setAttribute("data-id", id)
-    el.innerHTML = `
-    <div class="table_header flex">
-        <div class="color_rect" style="background: ${color};"></div>
-    </div>
-    <div class="table_header table_data">${name}</div>
-    <div class="table_header table_data">${type}</div>
-    <div class="table_header table_data">${color}</div>
-    <div class="table_header">
-        <svg class="change" width="15" height="16" viewBox="0 0 15 16" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10.8701 1.60447C11.0429 1.41283 11.2481 1.26081 11.4739 1.1571C11.6997 1.05338 11.9417 1 12.1861 1C12.4306 1 12.6726 1.05338 12.8984 1.1571C13.1242 1.26081 13.3293 1.41283 13.5022 1.60447C13.675 1.79611 13.8121 2.02362 13.9056 2.27401C13.9991 2.5244 14.0473 2.79277 14.0473 3.06379C14.0473 3.33481 13.9991 3.60317 13.9056 3.85356C13.8121 4.10395 13.675 4.33146 13.5022 4.5231L4.61905 14.3735L1 15.468L1.98701 11.4549L10.8701 1.60447Z" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>    
-    </div>
-    <div class="table_header">
-        <svg class="delete" width="11" height="13" viewBox="0 0 11 13" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M11 1H0L1.26923 13H9.73077L11 1ZM9.88865 2H1.11135L2.16904 12H8.83096L9.88865 2Z"/>
-        <rect width="11" height="2"/>
-        </svg>    
-    </div>
-    `
+    el.setAttribute('name', name)
+    el.setAttribute('type', type)
+    el.setAttribute('color', color)
     document.querySelector(".added_colors").appendChild(el) 
 }
 
@@ -174,64 +197,4 @@ function loadFromLocalStorage() {
     return JSON.parse(localStorage.getItem("color-array"))
 }
 
-
-
- // глобальная переменная для контекста WebGL
-
-// function start() {
-//   var canvas = document.getElementById("glcanvas");
-  
-//   var gl = canvas.getContext('webgl');
-
-//   // продолжать только если WebGL доступен и работает
-
-//   if (gl) {
-//     gl.clearColor(0.0, 0.0, 0.0, 1.0);                      // установить в качестве цвета очистки буфера цвета чёрный, полная непрозрачность
-//     gl.enable(gl.DEPTH_TEST);                               // включает использование буфера глубины
-//     gl.depthFunc(gl.LEQUAL);                                // определяет работу буфера глубины: более ближние объекты перекрывают дальние
-//     gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);      // очистить буфер цвета и буфер глубины.
-//   }
-// }
-
-// start()
-
-/*const arr = [
-    {
-        name:"name1", 
-        type: "main", 
-        color: '#f4f4f4'
-    },
-    {
-        name:"name2",
-        type: "side", 
-        color: '#f8f8f8'
-    }
-]
-
-class ColorLine extends HTMLElement {
-    constructor() {
-        super()
-        this.attachShadow({mode: 'open'})
-        
-    }
-
-    render() {
-        this.shadowRoot.innerHTML = `
-        <style>
-            .red {
-                color:red
-            }
-        </style>
-        <div class="red">${arr[0].name}</div>
-        `
-    }
-
-    connectedCallback() { // (2)
-        if (!this.rendered) {
-          this.render();
-          this.rendered = true;
-        }
-      }
-}
-
-window.customElements.define('color-line', ColorLine) */
+ 
